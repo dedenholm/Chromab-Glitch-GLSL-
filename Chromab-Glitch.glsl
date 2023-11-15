@@ -7,10 +7,10 @@ float time_long_cyclic =sin(time/6000);
 float time_cyclic1 = sin((time+sin(time/10))/450);
 float time_cyclic2 = sin((time+sin(time/400))/534);
 
-float time_noise = cos(time*time*time*(time*(time*6.-15.)+10.))*325;
+float time_noise = cos(time*time*time*(time*(time*6.-15.)+10.))*200;
 float time_cyclic3 = cos(sin(time)/time_noise);
 
-float time_cyclic4 = mod(time_cyclic3*time_mod, time_cyclic2);
+float time_cyclic4 = sin(mod(time_cyclic3*time_mod, time_cyclic2/150));
 float smooth1 = smoothstep(time_cyclic3*time_noise, time_cyclic2, time_cyclic4);
 
 
@@ -20,15 +20,15 @@ float onoff = smoothstep(-1, 1, time_long_cyclic);
 float smooth3 = smoothstep(time_long_cyclic, time, time_cyclic4)*(onoff+1);
 float time_cyclic5 = (1+onoff)*cos(time_cyclic4*time_long);
 // Offsets in pixels for each color
-vec2 uvb = vec2(0.5*time_cyclic2*smooth1,time_cyclic3);
-vec2 uvg = vec2(-1*time_cyclic3*time_cyclic4*smooth1,1*time_cyclic1);
-vec2 uvr = vec2(-11*time_cyclic5,-2*time_cyclic2*smooth2);
+vec2 uvb = vec2(0.5*time_cyclic2*smooth1,time_cyclic3*2);
+vec2 uvg = vec2(-3*time_cyclic3*time_cyclic4*smooth1,3*time_cyclic1);
+vec2 uvr = vec2(5*time_cyclic5,-3*time_cyclic2*smooth2);
 
 // Scaling of the effect. This makes the effect stronger
 // on pixels further away from the center of the window 
 // and weaker on pixels close to it
 // Set as 0 to disable
-float scaling_factor = 0.8+0.8*((onoff+1)*time_cyclic4);
+float scaling_factor = 0.8+0.1*((onoff+1)*time_cyclic4);
 
 
 // Base strength of the effect. To be used along the scaling_factor
